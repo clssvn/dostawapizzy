@@ -1,1 +1,0 @@
-Scaffold-DbContext "Server=(localdb)\v11.0;Database=MyDB;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -t Emp
