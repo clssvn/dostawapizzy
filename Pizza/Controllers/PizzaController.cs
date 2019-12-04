@@ -18,9 +18,22 @@ namespace Pizza.Controllers
             _context = context;
         }
 
-        public void GetEmpts()
+        public OkObjectResult GetEmpts()
         {
-            return Ok()
+            return Ok(_context.Emp.ToList());
         }
+        
+        [HttpGet("{id:int}")]
+        public IActionResult GetEmp(int id)
+        {
+            var emp = _context.Emp.FirstOrDefault(e => e.Empno == id);
+            if (emp == null)
+            {
+                return NotFound();
+            }
+            return Ok(emp);
+        }
+
+
     }
 }
