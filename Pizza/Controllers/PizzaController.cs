@@ -18,20 +18,31 @@ namespace Pizza.Controllers
             _context = context;
         }
 
-        public OkObjectResult GetEmpts()
+        public OkObjectResult GetPizzas()
         {
-            return Ok(_context.Emp.ToList());
+            return Ok(_context.Pizza.ToList());
         }
-        
+
         [HttpGet("{id:int}")]
-        public IActionResult GetEmp(int id)
+        public IActionResult GetPizza(int id)
         {
-            var emp = _context.Emp.FirstOrDefault(e => e.Empno == id);
-            if (emp == null)
+            var pizza = _context.Pizza.FirstOrDefault(e => e.IdPizza == id);
+            if (pizza == null)
             {
                 return NotFound();
             }
-            return Ok(emp);
+            return Ok(pizza);
+        }
+
+        [HttpGet("{id:int}/skladniki")]
+        public IActionResult GetSkladnikiPizzy(int id)
+        {
+            var skladniki = _context.PizzaSkladnik.Where(p => p.PizzaIdPizza.Equals(id)).Join().ToList();
+            if (skladniki == null)
+            {
+                return NotFound();
+            }
+            return Ok(skladniki);
         }
 
 
