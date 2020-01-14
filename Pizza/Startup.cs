@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Pizza.Models;
 using Swashbuckle.AspNetCore.Swagger;
+using Swashbuckle.AspNetCore.SwaggerUI;
 
 namespace Pizza
 {
@@ -48,8 +49,9 @@ namespace Pizza
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
 
                 //... and tell Swagger to use those XML comments.
-               // c.IncludeXmlComments(xmlPath);
+                c.IncludeXmlComments(xmlPath);
             });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

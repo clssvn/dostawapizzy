@@ -5,8 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Pizza.Models;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace Pizza.Controllers
 {
     [Route("api/[controller]")]
@@ -19,36 +17,32 @@ namespace Pizza.Controllers
             _context = context;
         }
 
-        // GET: api/values
-        [HttpGet]
-        public IEnumerable<string> Get()
+        public OkObjectResult GetZamowienia()
         {
-            return new string[] { "value1", "value2" };
+            return Ok(_context.Zamowienie.ToList());
         }
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{id:int}")]
+        public IActionResult GetZamowienie(int id)
         {
-            return "value";
+            var zam = _context.Zamowienie.FirstOrDefault(e => e.IdZamowienie == id);
+            if (zam == null)
+            {
+                return NotFound();
+            }
+            return Ok(zam);
         }
 
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody]string value)
+        [HttpGet("avgtime")]
+        public IActionResult AvgTime(int id)
         {
+            var avg = _context.Zamowienie
+                .Select(e => new { day = ((System.DateTime)e.DataCzasZamowienia).Day, time = e.DataCzasRealizacjiZamowienia.Subtract((System.DateTime)e.DataCzasZamowienia )})
+                .Where(f =>  f.day == DateTime.Today.Day)
+                .Average(t => t.time.TotalMinutes);
+
+            return Ok(avg);
         }
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }

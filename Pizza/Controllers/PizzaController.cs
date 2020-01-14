@@ -10,17 +10,9 @@ using Pizza.Models;
 
 namespace Pizza.Controllers
 {
-
+  
     [Route("api/[controller]")]
     [ApiController]
-
-    /// <summary>
-    /// Metoda zwraca dane..
-    /// </summary>
-    /// <returns>
-    /// Lista...
-    /// </returns>
-    /// 
     public class PizzaController : ControllerBase
     {
         private s17628Context _context;
@@ -34,6 +26,12 @@ namespace Pizza.Controllers
             return Ok(_context.Pizza.ToList());
         }
 
+        /// <summary>
+        /// Metoda zwraca dane
+        /// </summary>
+        /// <returns>
+        /// Lista
+        /// </returns>
         [HttpGet("{id:int}")]
         public IActionResult GetPizza(int id)
         {
@@ -45,6 +43,12 @@ namespace Pizza.Controllers
             return Ok(pizza);
         }
 
+        /// <summary>
+        /// Metoda zwraca dane
+        /// </summary>
+        /// <returns>
+        /// Lista
+        /// </returns>
         [HttpGet("{id:int}/skladniki")]
         public IActionResult GetSkladnikiPizzy(int id)
         {
